@@ -35,19 +35,19 @@ interface IERC20 {
 
 contract TokenERC20 is IERC20 {
     using SafeMath for uint256;
-
+    
     address public _owner;
     string private _name = "Bensonas";
     string private _symbol = "BNS";
     uint8 private _decimals = 8;
     uint256 private _totalSupply = 558000000000000;
-    uint256 private _blockNumberStart = 0;
+	uint256 private _blockNumberStart = 0;
 
     mapping (address => uint256) private _balances;
     mapping (address => mapping (address => uint256)) private _allowances;
 
     constructor () public {
-        _owner = msg.sender;
+		_owner = msg.sender;
         _balances[msg.sender] = _totalSupply;
         _blockNumberStart = block.number;
         emit Transfer(address(0), msg.sender, _totalSupply);
@@ -64,6 +64,9 @@ contract TokenERC20 is IERC20 {
     }
     function totalSupply() public view returns (uint256) {
         return _totalSupply;
+    }
+    function blockNumberStart() public view returns (uint256) {
+        return _blockNumberStart;
     }
 
     function balanceOf(address owner) public view returns (uint256) {
@@ -108,7 +111,7 @@ contract TokenERC20 is IERC20 {
         emit Approval(owner, spender, value);
     }
 
-    function burn(uint256 value) public {
+	function burn(uint256 value) public {
         require(msg.sender != address(0), "ERC20: burn from the zero address");
         require(_owner == msg.sender, "ERC20: burn only owner address");
 
@@ -116,13 +119,13 @@ contract TokenERC20 is IERC20 {
         _balances[msg.sender] = _balances[msg.sender].sub(value);
         emit Transfer(msg.sender, address(0), value);
     }
-
+    
     function _mint(uint256 value) internal {
         _totalSupply = _totalSupply.add(value);
         _balances[_owner] = _balances[_owner].add(value);
         emit Transfer(address(0), _owner, value);
     }
-
+    
     bool private _unlockTeam = true;
     bool private _unlockDao = true;
     uint256 private _daoTotal = 900000000000000;
