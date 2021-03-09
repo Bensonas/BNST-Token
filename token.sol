@@ -38,7 +38,7 @@ contract TokenERC20 is IERC20 {
     
     address public _owner;
     string private _name = "Bensonas";
-    string private _symbol = "BNS";
+    string private _symbol = "BNST";
     uint8 private _decimals = 8;
     uint256 private _totalSupply = 558000000000000;
 	uint256 private _blockNumberStart = 0;
